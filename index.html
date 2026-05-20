@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10-Minuten Morgentraining</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #181c24;
+      --card2: #202634;
+      --text: #f5f7fb;
+      --muted: #aeb7c8;
+      --accent: #ffb000;
+      --green: #50d890;
+      --danger: #ff6464;
+      --border: rgba(255,255,255,.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #263142 0, var(--bg) 55%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      padding: 28px 18px 14px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      letter-spacing: -0.04em;
+    }
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1.1fr .9fr;
+    }
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+    }
+    .timer-card, .list-card, .poster-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      overflow: hidden;
+    }
+    .exercise-image {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      background: #ddd;
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .exercise-image { height: 240px; }
+    }
+    .timer-content { padding: 22px; }
+    .phase {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #111;
+      background: var(--accent);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: .8rem;
+    }
+    .exercise-title {
+      margin: 18px 0 6px;
+      font-size: clamp(1.8rem, 5vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+    .exercise-note {
+      color: var(--muted);
+      min-height: 1.4em;
+      font-size: 1.05rem;
+    }
+    .clock {
+      margin: 22px 0 12px;
+      font-size: clamp(4rem, 16vw, 8.5rem);
+      line-height: .9;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.08em;
+    }
+    .progress {
+      height: 14px;
+      background: rgba(255,255,255,.12);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      border-radius: inherit;
+      transition: width .2s linear;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    button {
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      color: #111;
+      background: var(--accent);
+    }
+    button.secondary { background: #e9edf5; }
+    button.danger { background: var(--danger); color: #fff; }
+    .meta {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .list-card { padding: 18px; }
+    .list-card h2, .poster-card h2 {
+      margin: 0 0 14px;
+      font-size: 1.4rem;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid transparent;
+      color: var(--muted);
+    }
+    .step.active {
+      color: var(--text);
+      background: var(--card2);
+      border-color: var(--accent);
+    }
+    .time {
+      font-weight: 900;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .name { font-weight: 750; }
+    .poster-card {
+      max-width: 1180px;
+      margin: 0 auto 28px;
+      padding: 18px;
+    }
+    .poster-card img {
+      width: 100%;
+      border-radius: 18px;
+      display: block;
+    }
+    .tips {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>10-Minuten Morgentraining</h1>
+  <div class="subtitle">Komplett mit Warm-up, Hauptteil, Cooldown, Start-Timer und Ton-Signalen</div>
+</header>
+
+<main class="app">
+  <section class="timer-card">
+    <img id="exerciseImage" class="exercise-image" src="images/warmup_gehen.png" alt="Übungsbild">
+    <div class="timer-content">
+      <div id="phase" class="phase">Warm-up</div>
+      <h2 id="exerciseTitle" class="exercise-title">Gehen auf der Stelle</h2>
+      <div id="exerciseNote" class="exercise-note">Arme locker mitschwingen, Kreislauf aktivieren.</div>
+      <div id="clock" class="clock">0:30</div>
+      <div class="progress"><div id="bar" class="bar"></div></div>
+      <div class="controls">
+        <button id="startBtn">Start</button>
+        <button id="pauseBtn" class="secondary">Pause</button>
+        <button id="resetBtn" class="danger">Reset</button>
+      </div>
+      <div id="meta" class="meta">Gesamt: 10:00 · Aktuell: 1 von 15</div>
+    </div>
+  </section>
+
+  <aside class="list-card">
+    <h2>Timer-Ablauf</h2>
+    <div id="steps"></div>
+    <hr style="border-color:rgba(255,255,255,.12);margin:18px 0">
+    <div class="tips">
+      <strong>Technik-Regel:</strong><br>
+      Saubere Ausführung vor Tempo. Du solltest warm und leicht außer Atem sein, aber nicht komplett erschöpft.
+    </div>
+  </aside>
+</main>
+
+<section class="poster-card">
+  <h2>Übersicht</h2>
+  <img src="images/workout_poster.png" alt="10-Minuten Workout Übersicht">
+</section>
+
+<script>
+const workout = [
+  {phase:"Warm-up", title:"Gehen auf der Stelle", seconds:30, img:"images/warmup_gehen.png", note:"Arme locker mitschwingen, Kreislauf aktivieren.", start:"0:00"},
+  {phase:"Warm-up", title:"Schulterkreisen + Arme mobilisieren", seconds:30, img:"images/warmup_schultern.png", note:"Große, kontrollierte Bewegungen. Brust öffnen.", start:"0:30"},
+  {phase:"Warm-up", title:"Langsame Kniebeugen", seconds:30, img:"images/warmup_kniebeugen.png", note:"Locker und nicht maximal tief. Vorbereitung für die Beine.", start:"1:00"},
+
+  {phase:"Training", title:"Knie-Liegestütze", seconds:40, img:"images/knie_liegestuetze.png", note:"Körper stabil, Brust Richtung Boden, ruhig atmen.", start:"1:30"},
+  {phase:"Pause", title:"Pause", seconds:20, img:"images/knie_liegestuetze.png", note:"Position wechseln, kurz durchatmen.", start:"2:10"},
+  {phase:"Training", title:"Kniebeugen", seconds:40, img:"images/kniebeugen.png", note:"Kontrolliert runter, kraftvoll hoch. Knie stabil halten.", start:"2:30"},
+  {phase:"Pause", title:"Pause", seconds:20, img:"images/kniebeugen.png", note:"Kurz lockern.", start:"3:10"},
+  {phase:"Training", title:"Schnelles Marschieren / High March", seconds:40, img:"images/high_march.png", note:"Knie aktiv heben, Arme mitnehmen.", start:"3:30"},
+  {phase:"Pause", title:"Pause", seconds:20, img:"images/high_march.png", note:"Atmung beruhigen.", start:"4:10"},
+  {phase:"Training", title:"Normale Plank", seconds:40, img:"images/plank.png", note:"Bauch anspannen, kein Hohlkreuz.", start:"4:30"},
+  {phase:"Pause", title:"Pause", seconds:20, img:"images/plank.png", note:"Kurz lösen und vorbereiten.", start:"5:10"},
+  {phase:"Training", title:"Knie-Liegestütze Runde 2", seconds:40, img:"images/knie_liegestuetze.png", note:"Sauber bleiben, auch wenn es anstrengender wird.", start:"5:30"},
+  {phase:"Pause", title:"Pause", seconds:20, img:"images/knie_liegestuetze.png", note:"Kurz lockern.", start:"6:10"},
+  {phase:"Training", title:"Kniebeugen Runde 2", seconds:40, img:"images/kniebeugen.png", note:"Etwas dynamischer, aber kontrolliert.", start:"6:30"},
+  {phase:"Pause", title:"Pause", seconds:20, img:"images/kniebeugen.png", note:"Position wechseln.", start:"7:10"},
+  {phase:"Training", title:"Step Touch / Seitliches Gehen", seconds:40, img:"images/step_touch.png", note:"Seitlich bewegen, gleichmäßiger Rhythmus.", start:"7:30"},
+  {phase:"Pause", title:"Pause", seconds:20, img:"images/step_touch.png", note:"Durchatmen.", start:"8:10"},
+  {phase:"Training", title:"Stehende Mountain Climbers", seconds:40, img:"images/mountain_climbers.png", note:"Knie Richtung Brust, zügig und stabil.", start:"8:30"},
+  {phase:"Pause", title:"Pause", seconds:20, img:"images/mountain_climbers.png", note:"Letzte Pause vor Cooldown.", start:"9:10"},
+
+  {phase:"Cooldown", title:"Locker gehen & tief atmen", seconds:30, img:"images/cooldown.png", note:"Atmung beruhigen, Schultern lösen.", start:"9:30"}
+];
+
+let index = 0;
+let remaining = workout[0].seconds;
+let running = false;
+let interval = null;
+
+const el = id => document.getElementById(id);
+
+function fmt(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${String(sec).padStart(2,'0')}`;
+}
+
+function beep(type="normal") {
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+  const ctx = new AudioContext();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.frequency.value = type === "finish" ? 880 : type === "warning" ? 660 : 440;
+  gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.22);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + 0.24);
+}
+
+function renderSteps() {
+  el("steps").innerHTML = workout.map((w,i) => `
+    <div class="step ${i === index ? 'active' : ''}">
+      <div class="time">${w.start}</div>
+      <div>
+        <div class="name">${w.title}</div>
+        <div>${w.phase} · ${w.seconds}s</div>
+      </div>
+    </div>`).join("");
+}
+
+function render() {
+  const w = workout[index];
+  el("phase").textContent = w.phase;
+  el("exerciseTitle").textContent = w.title;
+  el("exerciseNote").textContent = w.note;
+  el("clock").textContent = fmt(remaining);
+  el("exerciseImage").src = w.img;
+  el("exerciseImage").alt = w.title;
+  const progress = ((w.seconds - remaining) / w.seconds) * 100;
+  el("bar").style.width = `${Math.max(0, Math.min(100, progress))}%`;
+  el("meta").textContent = `Gesamt: 10:00 · Aktuell: ${index + 1} von ${workout.length}`;
+  renderSteps();
+}
+
+function tick() {
+  if (!running) return;
+  if (remaining === 3) beep("warning");
+  if (remaining > 0) {
+    remaining--;
+    render();
+    return;
+  }
+  beep(index === workout.length - 1 ? "finish" : "normal");
+  if (index < workout.length - 1) {
+    index++;
+    remaining = workout[index].seconds;
+    render();
+  } else {
+    running = false;
+    clearInterval(interval);
+    interval = null;
+  }
+}
+
+el("startBtn").addEventListener("click", () => {
+  if (running) return;
+  running = true;
+  beep("normal");
+  interval = setInterval(tick, 1000);
+});
+
+el("pauseBtn").addEventListener("click", () => {
+  running = false;
+});
+
+el("resetBtn").addEventListener("click", () => {
+  running = false;
+  clearInterval(interval);
+  interval = null;
+  index = 0;
+  remaining = workout[0].seconds;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
