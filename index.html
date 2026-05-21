@@ -6,47 +6,180 @@
   <title>10-Minuten Morgentraining</title>
   <style>
     :root {
-      --bg:#0f1115; --card2:#202634; --text:#f5f7fb; --muted:#aeb7c8;
-      --accent:#ffb000; --green:#50d890; --danger:#ff6464; --blue:#6aa9ff;
-      --border:rgba(255,255,255,.12);
+      --bg: #0f1115;
+      --card: #181c24;
+      --card2: #202634;
+      --text: #f5f7fb;
+      --muted: #aeb7c8;
+      --accent: #ffb000;
+      --green: #50d890;
+      --danger: #ff6464;
+      --border: rgba(255,255,255,.12);
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top,#263142 0,var(--bg) 55%);color:var(--text);min-height:100vh}
-    header{padding:28px 18px 14px;text-align:center}
-    h1{margin:0;font-size:clamp(2rem,5vw,4rem);letter-spacing:-.04em}
-    .subtitle{margin-top:8px;color:var(--muted);font-size:1.05rem}
-    .app{max-width:1180px;margin:0 auto;padding:16px;display:grid;gap:18px;grid-template-columns:1.1fr .9fr}
-    @media(max-width:900px){.app{grid-template-columns:1fr}}
-    .timer-card,.list-card,.poster-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border:1px solid var(--border);border-radius:28px;box-shadow:0 20px 60px rgba(0,0,0,.35);overflow:hidden}
-    .exercise-image{width:100%;height:360px;object-fit:cover;background:#ddd;display:block}
-    @media(max-width:600px){.exercise-image{height:240px}}
-    .timer-content{padding:22px}
-    .phase{display:inline-flex;gap:8px;align-items:center;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#111;background:var(--accent);border-radius:999px;padding:7px 12px;font-size:.8rem}
-    .phase.pause{background:var(--blue);color:#07111f}.phase.cooldown{background:var(--green);color:#07140d}
-    .exercise-title{margin:18px 0 6px;font-size:clamp(1.8rem,5vw,3.4rem);line-height:1;letter-spacing:-.05em}
-    .exercise-note{color:var(--muted);min-height:1.4em;font-size:1.05rem}
-    .next-line{margin-top:12px;padding:12px 14px;border-radius:16px;background:rgba(106,169,255,.12);border:1px solid rgba(106,169,255,.35);color:#dceaff;font-size:1.05rem;display:none}
-    .next-line strong{color:#fff}
-    .clock{margin:22px 0 12px;font-size:clamp(4rem,16vw,8.5rem);line-height:.9;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.08em}
-    .progress{height:14px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden}
-    .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--green));border-radius:inherit;transition:width .2s linear}
-    .controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-    button{border:0;border-radius:16px;padding:14px 18px;font-size:1rem;font-weight:800;cursor:pointer;color:#111;background:var(--accent)}
-    button.secondary{background:#e9edf5}button.danger{background:var(--danger);color:#fff}
-    .meta{margin-top:12px;color:var(--muted);font-size:.95rem}
-    .list-card{padding:18px}.list-card h2,.poster-card h2{margin:0 0 14px;font-size:1.4rem}
-    .step{display:grid;grid-template-columns:80px 1fr;gap:12px;padding:12px;border-radius:18px;border:1px solid transparent;color:var(--muted)}
-    .step.active{color:var(--text);background:var(--card2);border-color:var(--accent)}
-    .step.pause-step.active{border-color:var(--blue)}
-    .time{font-weight:900;color:var(--accent);font-variant-numeric:tabular-nums}.name{font-weight:750}
-    .poster-card{max-width:1180px;margin:0 auto 28px;padding:18px}.poster-card img{width:100%;border-radius:18px;display:block}
-    .tips{color:var(--muted);line-height:1.6}
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #263142 0, var(--bg) 55%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    header {
+      padding: 28px 18px 14px;
+      text-align: center;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4rem);
+      letter-spacing: -0.04em;
+    }
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: 1.1fr .9fr;
+    }
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+    }
+    .timer-card, .list-card, .poster-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+      overflow: hidden;
+    }
+    .exercise-image {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      background: #ddd;
+      display: block;
+    }
+    @media (max-width: 600px) {
+      .exercise-image { height: 240px; }
+    }
+    .timer-content { padding: 22px; }
+    .phase {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #111;
+      background: var(--accent);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: .8rem;
+    }
+    .exercise-title {
+      margin: 18px 0 6px;
+      font-size: clamp(1.8rem, 5vw, 3.4rem);
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+    .exercise-note {
+      color: var(--muted);
+      min-height: 1.4em;
+      font-size: 1.05rem;
+    }
+    .clock {
+      margin: 22px 0 12px;
+      font-size: clamp(4rem, 16vw, 8.5rem);
+      line-height: .9;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.08em;
+    }
+    .progress {
+      height: 14px;
+      background: rgba(255,255,255,.12);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      border-radius: inherit;
+      transition: width .2s linear;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    button {
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 18px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      color: #111;
+      background: var(--accent);
+    }
+    button.secondary { background: #e9edf5; }
+    button.danger { background: var(--danger); color: #fff; }
+    .meta {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .list-card { padding: 18px; }
+    .list-card h2, .poster-card h2 {
+      margin: 0 0 14px;
+      font-size: 1.4rem;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 12px;
+      padding: 12px;
+      border-radius: 18px;
+      border: 1px solid transparent;
+      color: var(--muted);
+    }
+    .step.active {
+      color: var(--text);
+      background: var(--card2);
+      border-color: var(--accent);
+    }
+    .time {
+      font-weight: 900;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .name { font-weight: 750; }
+    .poster-card {
+      max-width: 1180px;
+      margin: 0 auto 28px;
+      padding: 18px;
+    }
+    .poster-card img {
+      width: 100%;
+      border-radius: 18px;
+      display: block;
+    }
+    .tips {
+      color: var(--muted);
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
 <header>
   <h1>10-Minuten Morgentraining</h1>
-  <div class="subtitle">Mit Warm-up, Übungsstart-Ton, Pausenansage und Anzeige der nächsten Übung</div>
+  <div class="subtitle">Komplett mit Warm-up, Hauptteil, Cooldown, Start-Timer und Ton-Signalen</div>
 </header>
 
 <main class="app">
@@ -56,7 +189,6 @@
       <div id="phase" class="phase">Warm-up</div>
       <h2 id="exerciseTitle" class="exercise-title">Gehen auf der Stelle</h2>
       <div id="exerciseNote" class="exercise-note">Arme locker mitschwingen, Kreislauf aktivieren.</div>
-      <div id="nextLine" class="next-line"></div>
       <div id="clock" class="clock">0:30</div>
       <div class="progress"><div id="bar" class="bar"></div></div>
       <div class="controls">
@@ -64,7 +196,7 @@
         <button id="pauseBtn" class="secondary">Pause</button>
         <button id="resetBtn" class="danger">Reset</button>
       </div>
-      <div id="meta" class="meta">Gesamt: 10:00 · Aktuell: 1 von 20</div>
+      <div id="meta" class="meta">Gesamt: 10:00 · Aktuell: 1 von 15</div>
     </div>
   </section>
 
@@ -73,11 +205,8 @@
     <div id="steps"></div>
     <hr style="border-color:rgba(255,255,255,.12);margin:18px 0">
     <div class="tips">
-      <strong>Audio-Hinweis:</strong><br>
-      Ton und Sprachausgabe funktionieren in den meisten Browsern erst nach Klick auf <strong>Start</strong>.
-      <br><br>
       <strong>Technik-Regel:</strong><br>
-      Saubere Ausführung vor Tempo. Warm und leicht außer Atem ist gut – komplett erschöpft ist nicht nötig.
+      Saubere Ausführung vor Tempo. Du solltest warm und leicht außer Atem sein, aber nicht komplett erschöpft.
     </div>
   </aside>
 </main>
@@ -87,11 +216,13 @@
   <img src="images/workout_poster.png" alt="10-Minuten Workout Übersicht">
 </section>
 
+
 <script>
 const workout = [
   {phase:"Warm-up", title:"Gehen auf der Stelle", seconds:30, img:"images/warmup_gehen.png", note:"Arme locker mitschwingen, Kreislauf aktivieren.", start:"0:00"},
   {phase:"Warm-up", title:"Schulterkreisen + Arme mobilisieren", seconds:30, img:"images/warmup_schultern.png", note:"Große, kontrollierte Bewegungen. Brust öffnen.", start:"0:30"},
   {phase:"Warm-up", title:"Langsame Kniebeugen", seconds:30, img:"images/warmup_kniebeugen.png", note:"Locker und nicht maximal tief. Vorbereitung für die Beine.", start:"1:00"},
+
   {phase:"Training", title:"Knie-Liegestütze", seconds:40, img:"images/knie_liegestuetze.png", note:"Körper stabil, Brust Richtung Boden, ruhig atmen.", start:"1:30"},
   {phase:"Pause", title:"Pause", seconds:20, img:"images/knie_liegestuetze.png", note:"Position wechseln, kurz durchatmen.", start:"2:10"},
   {phase:"Training", title:"Kniebeugen", seconds:40, img:"images/kniebeugen.png", note:"Kontrolliert runter, kraftvoll hoch. Knie stabil halten.", start:"2:30"},
@@ -115,73 +246,71 @@ let index = 0;
 let remaining = workout[0].seconds;
 let running = false;
 let interval = null;
-let audioContext = null;
+let audioCtx = null;
+let audioReady = false;
 
 const el = id => document.getElementById(id);
 
 function fmt(s) {
-  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2,'0')}`;
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${String(sec).padStart(2,'0')}`;
 }
 
-function ensureAudio() {
+async function unlockAudio() {
   const AudioContext = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContext) return;
-  if (!audioContext) audioContext = new AudioContext();
-  if (audioContext.state === "suspended") audioContext.resume();
-}
+  if (!AudioContext) return false;
 
-function tone(freq = 660, duration = 0.18, volume = 0.22) {
-  ensureAudio();
-  if (!audioContext) return;
-  const osc = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-  osc.connect(gain);
-  gain.connect(audioContext.destination);
-  osc.type = "sine";
-  osc.frequency.value = freq;
-  gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(volume, audioContext.currentTime + 0.02);
-  gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
-  osc.start(audioContext.currentTime);
-  osc.stop(audioContext.currentTime + duration + 0.03);
-}
+  if (!audioCtx) audioCtx = new AudioContext();
 
-function startExerciseTone() {
-  tone(740, 0.16, 0.24);
-  setTimeout(() => tone(980, 0.18, 0.24), 180);
-}
-
-function pauseTone() { tone(392, 0.22, 0.2); }
-function warningTone() { tone(660, 0.12, 0.18); }
-function finishTone() {
-  tone(880, 0.16, 0.24);
-  setTimeout(() => tone(1046, 0.2, 0.24), 180);
-}
-
-function speak(text) {
-  if (!("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "de-DE";
-  utterance.rate = 1.0;
-  utterance.pitch = 1.0;
-  utterance.volume = 1.0;
-  const voices = window.speechSynthesis.getVoices();
-  const germanVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith("de"));
-  if (germanVoice) utterance.voice = germanVoice;
-  window.speechSynthesis.speak(utterance);
-}
-
-function nextTrainingTitle(fromIndex = index) {
-  for (let i = fromIndex + 1; i < workout.length; i++) {
-    if (workout[i].phase !== "Pause") return workout[i].title;
+  if (audioCtx.state === "suspended") {
+    try { await audioCtx.resume(); } catch (e) {}
   }
-  return "Fertig";
+
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.frequency.value = 440;
+    gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.04);
+    audioReady = true;
+    return true;
+  } catch (e) {
+    audioReady = false;
+    return false;
+  }
+}
+
+function beep(type="normal") {
+  if (!audioCtx || !audioReady) {
+    if (navigator.vibrate) navigator.vibrate(type === "finish" ? [120,80,120] : 80);
+    return;
+  }
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+
+  osc.type = "sine";
+  osc.frequency.value = type === "finish" ? 880 : type === "warning" ? 660 : 440;
+
+  gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.35, audioCtx.currentTime + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.28);
+
+  osc.start(audioCtx.currentTime);
+  osc.stop(audioCtx.currentTime + 0.30);
+
+  if (navigator.vibrate) navigator.vibrate(type === "finish" ? [120,80,120] : 60);
 }
 
 function renderSteps() {
   el("steps").innerHTML = workout.map((w,i) => `
-    <div class="step ${w.phase === "Pause" ? "pause-step" : ""} ${i === index ? "active" : ""}">
+    <div class="step ${i === index ? 'active' : ''}">
       <div class="time">${w.start}</div>
       <div>
         <div class="name">${w.title}</div>
@@ -192,61 +321,21 @@ function renderSteps() {
 
 function render() {
   const w = workout[index];
-  const phaseEl = el("phase");
-  phaseEl.textContent = w.phase;
-  phaseEl.className = "phase";
-  if (w.phase === "Pause") phaseEl.classList.add("pause");
-  if (w.phase === "Cooldown") phaseEl.classList.add("cooldown");
-
+  el("phase").textContent = w.phase;
   el("exerciseTitle").textContent = w.title;
   el("exerciseNote").textContent = w.note;
   el("clock").textContent = fmt(remaining);
   el("exerciseImage").src = w.img;
   el("exerciseImage").alt = w.title;
-
-  const nextLine = el("nextLine");
-  if (w.phase === "Pause") {
-    nextLine.style.display = "block";
-    nextLine.innerHTML = `<strong>Nächste Übung:</strong> ${nextTrainingTitle(index)}`;
-  } else {
-    nextLine.style.display = "none";
-    nextLine.textContent = "";
-  }
-
   const progress = ((w.seconds - remaining) / w.seconds) * 100;
   el("bar").style.width = `${Math.max(0, Math.min(100, progress))}%`;
-  el("meta").textContent = `Gesamt: 10:00 · Aktuell: ${index + 1} von ${workout.length}`;
+  el("meta").textContent = `Gesamt: 10:00 · Aktuell: ${index + 1} von ${workout.length} · Ton: ${audioReady ? "aktiv" : "Start tippen zum Aktivieren"}`;
   renderSteps();
-}
-
-function announceCurrentSegment() {
-  const w = workout[index];
-  if (w.phase === "Pause") {
-    pauseTone();
-    speak("Pause");
-  } else {
-    startExerciseTone();
-  }
-}
-
-function advanceSegment() {
-  if (index < workout.length - 1) {
-    index++;
-    remaining = workout[index].seconds;
-    render();
-    announceCurrentSegment();
-  } else {
-    running = false;
-    clearInterval(interval);
-    interval = null;
-    finishTone();
-    render();
-  }
 }
 
 function tick() {
   if (!running) return;
-  if (remaining === 3) warningTone();
+  if (remaining === 3) beep("warning");
 
   if (remaining > 0) {
     remaining--;
@@ -254,29 +343,45 @@ function tick() {
     return;
   }
 
-  advanceSegment();
+  beep(index === workout.length - 1 ? "finish" : "normal");
+
+  if (index < workout.length - 1) {
+    index++;
+    remaining = workout[index].seconds;
+    render();
+  } else {
+    running = false;
+    clearInterval(interval);
+    interval = null;
+    render();
+  }
 }
 
-el("startBtn").addEventListener("click", () => {
-  ensureAudio();
+el("startBtn").addEventListener("click", async () => {
+  await unlockAudio();
   if (running) return;
   running = true;
-  announceCurrentSegment();
+  beep("normal");
   if (!interval) interval = setInterval(tick, 1000);
+  render();
 });
 
 el("pauseBtn").addEventListener("click", () => {
   running = false;
-  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+  render();
 });
 
 el("resetBtn").addEventListener("click", () => {
   running = false;
   clearInterval(interval);
   interval = null;
-  if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   index = 0;
   remaining = workout[0].seconds;
+  render();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) running = false;
   render();
 });
 
